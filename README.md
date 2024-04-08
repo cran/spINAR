@@ -1,5 +1,6 @@
 # spINAR
-[![status](https://joss.theoj.org/papers/6fcfcc77635fdd18153b35d5986fe2aa/status.svg)](https://github.com/openjournals/joss-reviews/issues/5152)
+[![status](https://joss.theoj.org/papers/6fcfcc77635fdd18153b35d5986fe2aa/status.svg)](https://github.com/openjournals/joss-reviews/issues/5386)
+[![CRAN](https://www.r-pkg.org/badges/version/spINAR)](https://cran.r-project.org/package=spINAR)
 [![R build status](https://github.com/MFaymon/spINAR/workflows/R-CMD-check/badge.svg)](https://github.com/MFaymon/spINAR/actions)
 [![codecov](https://codecov.io/gh/MFaymon/spINAR/branch/main/graph/badge.svg?token=U5KPFSY3XN)](https://app.codecov.io/gh/MFaymon/spINAR)
 [![DOI](https://zenodo.org/badge/520425653.svg)](https://zenodo.org/badge/latestdoi/520425653)
@@ -10,9 +11,14 @@ The package provides flexible simulation of INAR data using a general pmf to def
 
 ## References (related to the methodology)
 
-* Faymonville, M., Jentsch, C., Weiß, C.H. und Aleksandrov, B. (2022). Semiparametric Estimation of INAR Models using Roughness Penalization. Statistical Methods & Applications. [DOI](https://doi.org/10.1007/s10260-022-00655-0)
+* Faymonville, M., Jentsch, C., Weiß, C.H. and Aleksandrov, B. (2022). "Semiparametric Estimation of INAR Models using Roughness Penalization". Statistical Methods & Applications. [DOI](https://doi.org/10.1007/s10260-022-00655-0)
 * Jentsch, C. and Weiß, C.H. (2017), “Bootstrapping INAR Models”. Bernoulli 25(3), pp. 2359-2408. [DOI](https://doi.org/10.3150/18-BEJ1057)
 * Drost, F., Van den Akker, R. and Werker, B. (2009), “Efficient estimation of auto-regression parameters and inovation distributions for semiparametric integer-valued AR(p) models”. Journal of the Royal Statistical Society. Series B 71(2), pp. 467-485. [DOI](https://doi.org/10.1111/j.1467-9868.2008.00687.x)
+
+## Contribution
+This R package is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
+For bug reports (lack of documentation, misleading or wrong documentation, unexpected behaviour, ...) and feature requests please use the [issue tracker](https://github.com/MFaymon/spINAR/issues).
+Pull requests are welcome and will be included at the discretion of the author.
 
 ## Installation
 
@@ -73,3 +79,9 @@ spinar_boot(dat1, 1, 500, setting = "sp")
 spinar_boot(dat1, 1, 500, setting = "p", type = "mom", distr = "poi")
 ```
 
+## Application
+The file vignette.md provides reproduced results from the literature for each provided functionality of the spINAR package.
+
+## Outlook
+
+A possible extension of the spINAR package is to not only cover INAR models but also the extension to GINAR (generalized INAR) models, see [Latour (1997)](https://doi.org/10.1017/s0001867800027865).  This model class does not only cover the binomial thinning but also allows for other thinning operations, e.g. thinning using geometrically distributed random variables. 

@@ -37,7 +37,7 @@
 #'
 #' @export spinar_est_param
 spinar_est_param <- function(x, p, type, distr){
-  assert_integerish(p, lower = 1, upper = 2, len = 1)
+  assert_integerish(p, lower = 1, upper = 2, len = 1, any.missing = FALSE)
   assert_integerish(x, min.len = p+1, lower = 0)
   assert(checkChoice(type, c("mom", "ml")))
   assert(checkChoice(distr, c("poi", "geo", "nb")))
@@ -163,11 +163,13 @@ spinar_est_param <- function(x, p, type, distr){
       else {
         if(p==1){
           prob <- max(min(mean(x)/(var(x)*(1+eacf1)-eacf1*mean(x)),0.99),0)
-          theta <- c(max(eacf1, 1e-5), round((mean(x)*prob*(1-eacf1))/(1-prob)), prob)
+          rs <- ifelse(round((mean(x)*prob*(1-eacf1))/(1-prob)) == 0, 1, round((mean(x)*prob*(1-eacf1))/(1-prob)))
+          theta <- c(max(eacf1, 1e-5), rs, prob)
         }
         if(p==2){
           prob <- max(min(mean(x)/(var(x)*(1+ealpha1+ealpha2)-(ealpha1+ealpha2)*mean(x)),0.99),0)
-          theta <- c(max(ealpha1, 1e-5), max(ealpha2, 1e-5), round((mean(x)*prob*(1-ealpha1-ealpha2))/(1-prob)), prob)
+          rs <- ifelse(round((mean(x)*prob*(1-ealpha1-ealpha2))/(1-prob)) == 0, 1, round((mean(x)*prob*(1-ealpha1-ealpha2))/(1-prob)))
+          theta <- c(max(ealpha1, 1e-5), max(ealpha2, 1e-5), rs, prob)
         }
         est <- suppressWarnings(constrOptim(
           theta = theta,

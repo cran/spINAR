@@ -30,7 +30,7 @@ parametric bootstrapping (\code{\link{spinar_boot}}) of INAR data.
 
 \references{
 Faymonville, M., Jentsch, C., Weiß, C.H. and Aleksandrov, B. (2022).
-Semiparametric Estimation of INAR Models using Roughness Penalization.
+"Semiparametric Estimation of INAR Models using Roughness Penalization".
 Statistical Methods & Applications. \doi{10.1007/s10260-022-00655-0}.
 
 Jentsch, C. and Weiß, C. H. (2017), “Bootstrapping INAR Models”.
@@ -57,6 +57,11 @@ Authors:
   \item Javiera Riffo \email{javiera.riffo@tu-dortmund.de} (\href{https://orcid.org/0000-0002-5372-7196}{ORCID})
   \item Jonas Rieger \email{rieger@statistik.tu-dortmund.de} (\href{https://orcid.org/0000-0002-0007-4478}{ORCID})
   \item Carsten Jentsch \email{jentsch@statistik.tu-dortmund.de} (\href{https://orcid.org/0000-0001-7824-1697}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Christian H. Weiß \email{weissc@hsu-hh.de} (\href{https://orcid.org/0000-0001-8739-6631}{ORCID}) [contributor]
 }
 
 }

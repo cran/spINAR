@@ -13,10 +13,10 @@
 #' estimation setting \eqn{\in \code{\{"sp", "p"\}}}, where \code{"sp"} defines a semiparametric setting and
 #' \code{"p"} a parametric setting.
 #' @param type [\code{string(1)}]\cr
-#' type of estimation \eqn{\in \code{\{"mom", "ml"\}}}, where \code{"mom"} performs moment-based estimation and
+#' type of estimation \eqn{\in \code{\{"mom", "ml"\}}}, where \code{"mom"} (default) performs moment-based estimation and
 #' \code{"ml"} maximum likelihood-based estimation.
 #' @param distr [\code{string(1)}]\cr
-#' parametric family of innovation distribution \eqn{\in  \code{\{"poi", "geo", "nb"\}}}, where \code{"poi"} denotes
+#' parametric family of innovation distribution \eqn{\in  \code{\{"poi", "geo", "nb"\}}}, where \code{"poi"} (default) denotes
 #' Poi(\code{lambda}), \code{"geo"} Geo(\code{prob}) and \code{"nb"} NB(\code{r}, \code{prob}) distributions.
 #' @param M [\code{integer(1)}]\cr
 #' upper limit for the innovations.
@@ -42,10 +42,10 @@
 #' coefficients \eqn{\code{alpha}_1,...,\code{alpha}_p} and the estimated
 #' parameter(s) of the innovation distribution.}
 #' \item{\code{bs_ci_percentile}}{[\code{named matrix}] with the lower and
-#' upper bounds of Hall's bootstrap percentile confidence intervals for each
+#' upper bounds of the bootstrap percentile confidence intervals for each
 #' parameter in \code{parameters_star}.}
 #' \item{\code{bs_ci_hall}}{[\code{named matrix}] with the lower and
-#' upper bounds of the bootstrap percentile confidence intervals for each
+#' upper bounds of Hall's bootstrap percentile confidence intervals for each
 #' parameter in \code{parameters_star}.}
 #' }
 #'
@@ -64,15 +64,15 @@
 #' }
 #'
 #' @export spinar_boot
-spinar_boot <- function(x, p, B, setting, type = NA, distr = NA, M = 100, level = 0.05, progress = TRUE){
-  assert_integerish(p, lower = 1, upper = 2, len = 1)
+spinar_boot <- function(x, p, B, setting, type = "mom", distr = "poi", M = 100, level = 0.05, progress = TRUE){
+  assert_integerish(p, lower = 1, upper = 2, len = 1, any.missing = FALSE)
   assert_integerish(B, lower = 1, len = 1)
   assert_integerish(x, lower = 0, min.len = p+1)
   assert_choice(setting, c("sp", "p"))
-  assert_choice(type, c("mom", "ml", NA))
-  assert_choice(distr, c("poi", "geo", "nb", NA))
+  assert_choice(type, c("mom", "ml"))
+  assert_choice(distr, c("poi", "geo", "nb"))
   assert_integerish(M, lower = 0, len =  1)
-  assert_numeric(level, lower = 0, upper = 1, len = 1)
+  assert_numeric(level, lower = 1e-16, upper = 1, len = 1)
 
   bs <- list(x_star = matrix(NA, length(x), B), parameters_star = matrix(0, B, M+p+1),
              bs_ci_percentile = NULL, bs_ci_hall = NULL)
@@ -136,7 +136,8 @@ spinar_boot <- function(x, p, B, setting, type = NA, distr = NA, M = 100, level 
       bs$bs_ci_percentile[1,i] <- srt[B*level/2]
       bs$bs_ci_percentile[2,i] <- srt[B*(1-level/2)]
     } else{
-      K <- ceiling((B+1)*level/2)
+      K <- floor((B+1)*level/2)
+      if(K == 0){K <- 1}
       bs$bs_ci_percentile[1,i] <- srt[K]
       bs$bs_ci_percentile[2,i] <- srt[B+1-K]
     }
@@ -152,7 +153,8 @@ spinar_boot <- function(x, p, B, setting, type = NA, distr = NA, M = 100, level 
       bs$bs_ci_hall[1,i] <- parameters[i] - srt[B*(1-level/2)]
       bs$bs_ci_hall[2,i] <- parameters[i] - srt[B*level/2]
     } else{
-      K <- ceiling((B+1)*level/2)
+      K <- floor((B+1)*level/2)
+      if(K == 0){K <- 1}
       bs$bs_ci_hall[1,i] <- parameters[i] - srt[B+1-K]
       bs$bs_ci_hall[2,i] <- parameters[i] - srt[K]
     }

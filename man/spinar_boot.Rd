@@ -9,8 +9,8 @@ spinar_boot(
   p,
   B,
   setting,
-  type = NA,
-  distr = NA,
+  type = "mom",
+  distr = "poi",
   M = 100,
   level = 0.05,
   progress = TRUE
@@ -31,11 +31,11 @@ estimation setting \eqn{\in \code{\{"sp", "p"\}}}, where \code{"sp"} defines a s
 \code{"p"} a parametric setting.}
 
 \item{type}{[\code{string(1)}]\cr
-type of estimation \eqn{\in \code{\{"mom", "ml"\}}}, where \code{"mom"} performs moment-based estimation and
+type of estimation \eqn{\in \code{\{"mom", "ml"\}}}, where \code{"mom"} (default) performs moment-based estimation and
 \code{"ml"} maximum likelihood-based estimation.}
 
 \item{distr}{[\code{string(1)}]\cr
-parametric family of innovation distribution \eqn{\in  \code{\{"poi", "geo", "nb"\}}}, where \code{"poi"} denotes
+parametric family of innovation distribution \eqn{\in  \code{\{"poi", "geo", "nb"\}}}, where \code{"poi"} (default) denotes
 Poi(\code{lambda}), \code{"geo"} Geo(\code{prob}) and \code{"nb"} NB(\code{r}, \code{prob}) distributions.}
 
 \item{M}{[\code{integer(1)}]\cr
@@ -65,10 +65,10 @@ If \code{setting = "p"}, each row contains the estimated
 coefficients \eqn{\code{alpha}_1,...,\code{alpha}_p} and the estimated
 parameter(s) of the innovation distribution.}
 \item{\code{bs_ci_percentile}}{[\code{named matrix}] with the lower and
-upper bounds of Hall's bootstrap percentile confidence intervals for each
+upper bounds of the bootstrap percentile confidence intervals for each
 parameter in \code{parameters_star}.}
 \item{\code{bs_ci_hall}}{[\code{named matrix}] with the lower and
-upper bounds of the bootstrap percentile confidence intervals for each
+upper bounds of Hall's bootstrap percentile confidence intervals for each
 parameter in \code{parameters_star}.}
 }
 }
